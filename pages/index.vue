@@ -7,20 +7,38 @@ import axios from "axios";
 export default {
   setup() {
     const jsonData = ref(null);
+
+    let dsconfig = {
+      data: jsonData.value,
+      groups: [{ field: "class", isOpen: true }],
+    };
+
     let gridConfig = {
-      dataSource: jsonData.value,
+      dataSource: dsconfig,
       container: "#grid",
-      width: "60%",
+      width: "40%",
       height: "400px",
 
       columns: [
         { field: "class", width: 80 },
         { field: "name" },
         { field: "number" },
-        { field: "korean", width: 50 },
+        {
+          field: "korean",
+          groups: [
+            {
+              group: "*",
+              aggregates: [{ func: "total", payload: "name" }],
+              header: { prefix: "합계: ", field: "total" },
+            },
+          ],
+          //   width: 50,
+        },
         { field: "english", width: 50 },
         { field: "math", width: 50 },
       ],
+      groupable: true,
+      groupAutoOpen: true,
     };
     // 데이터 변경을 감지하고 그에 따라 그리드를 생성
     watch(jsonData, () => {
