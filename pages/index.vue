@@ -48,6 +48,8 @@ export default {
         selectMode: "multi",
       },
       hover: "row", // 마우스 hover단위. cell, row단위로 설정 가능. default값 = cell
+      showSticky: true,
+      stickyRow: true,
     };
     // 데이터 변경을 감지하고 그에 따라 그리드를 생성
     watch(jsonData, () => {
