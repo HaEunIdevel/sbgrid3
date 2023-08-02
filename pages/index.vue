@@ -10,6 +10,7 @@ export default {
 
     let dsconfig = {
       data: jsonData.value,
+
       groups: [{ field: "class", isOpen: true }],
     };
 
@@ -36,6 +37,53 @@ export default {
         },
         { field: "english", width: 50 },
         { field: "math", width: 50 },
+        {
+          field: "sum",
+          format: "#,###",
+          editable: false,
+          calc: {
+            require: ["korean", "english", "math"],
+            eval: function (data) {
+              return (
+                parseFloat(data.korean) + // parseFloat 은 문자열을 전체를 실수(숫자)로 바꿈
+                parseFloat(data.english) +
+                parseFloat(data.math)
+              );
+            },
+          },
+        },
+        {
+          field: "avg",
+          format: "#,##0.00", // #,### => 00,000  /// #,##0.00 => 00.00
+          calc: {
+            require: ["sum"],
+            eval: data => data.sum / 3,
+          },
+        },
+        {
+          field: "grade",
+          editable: false,
+          calc: {
+            require: ["avg"],
+            eval: data => {
+              if (data.avg > 90) return "A";
+              if (data.avg > 80) return "B";
+              if (data.avg > 70) return "C";
+              if (data.avg > 60) return "D";
+            },
+          },
+        },
+        {
+          field: "rank",
+          editable: false,
+          calc: {
+            require: ["sum"],
+            rows: rows => {
+              rows.sort((a, b) => b.sum - a.sum);
+              rows.forEach((row, index) => (row.rank = index + 1));
+            },
+          },
+        },
       ],
       groupable: true,
       groupAutoOpen: true,
