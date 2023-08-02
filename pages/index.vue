@@ -21,7 +21,7 @@ export default {
       height: "400px",
 
       columns: [
-        { field: "class", width: 80, selectable: false }, // 해당 영역은 선택 지정되지 않음.
+        { field: "class", width: 80, selectable: false, mergeRow: true }, // 해당 영역은 선택 지정되지 않음.
         { field: "name", selectable: false }, // 해당 영역은 선택 지정되지 않음.
         { field: "number", selectable: false }, // 해당 영역은 선택 지정되지 않음.
         {
@@ -96,8 +96,8 @@ export default {
         selectMode: "multi",
       },
       hover: "row", // 마우스 hover단위. cell, row단위로 설정 가능. default값 = cell
-      showSticky: true,
-      stickyRow: true,
+      //   stickyRow: true,
+      mergeRow: true, //행(가로) 단위 병합여부 true병합설정 // 여기에도 설정 추가해주어야하고, 원하는 해당 컬럼 부분에도 이 설정 추가해줘야 적용됨.
     };
     // 데이터 변경을 감지하고 그에 따라 그리드를 생성
     watch(jsonData, () => {
