@@ -20,9 +20,9 @@ export default {
       height: "400px",
 
       columns: [
-        { field: "class", width: 80 },
-        { field: "name" },
-        { field: "number" },
+        { field: "class", width: 80, selectable: false }, // 해당 영역은 선택 지정되지 않음.
+        { field: "name", selectable: false }, // 해당 영역은 선택 지정되지 않음.
+        { field: "number", selectable: false }, // 해당 영역은 선택 지정되지 않음.
         {
           field: "korean",
           groups: [
@@ -39,6 +39,15 @@ export default {
       ],
       groupable: true,
       groupAutoOpen: true,
+      navigatable: true, // 키보드로 포커스 이동 가능하게 설정
+      // 전체 selectable 설정
+      selectable: {
+        rowSelect: true,
+        columnSelect: true,
+        cellSelect: "cell",
+        selectMode: "multi",
+      },
+      hover: "row", // 마우스 hover단위. cell, row단위로 설정 가능. default값 = cell
     };
     // 데이터 변경을 감지하고 그에 따라 그리드를 생성
     watch(jsonData, () => {
